@@ -88,19 +88,9 @@ function hub-pr-checkout() {
     sbin="bin/exa" ogham/exa \
     sbin="fzf" junegunn/fzf
 
-  export GETUNIXTIMEMS_BODY="$(cat << EOF
-    fn main() {
-      let ts = std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
-        .unwrap()
-        .as_millis();
-      print!("{}", ts);
-    }
-EOF
-)"
   zinit as="command" wait="0b" lucid light-mode for \
     id-as="get-unixtime-ms" has="rustc" \
-    atclone='echo "$GETUNIXTIMEMS_BODY" | rustc -O -o get-unixtime-ms -' \
+    atclone="cat ~/.commands/get-unixtime-ms/main.rs | rustc -O -o get-unixtime-ms -" \
     atpull="%atclone" \
     sbin="get-unixtime-ms" \
     zdharma-continuum/null
