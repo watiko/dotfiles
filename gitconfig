@@ -1,0 +1,62 @@
+[user]
+  name = watiko
+  email = service@mail.watiko.net
+
+[core]
+  autocrlf = false
+  filemode = false
+  quotepath = false
+  editor = vim -c \"set fenc=utf-8\"
+  excludesfile = /Users/watiko/.gitignore_global
+
+[pull]
+  ff = only
+
+[diff]
+  compactionHeuristic = true
+
+[merge]
+  tool = vimdiff
+
+[rebase]
+  autosquash = true
+
+[color]
+  ui = true
+
+[alias]
+  sw = switch
+  co = checkout
+  ci = commit
+  cia = commit -a
+  ciam = commit --amend
+  ciaa = commit -a --amend
+  cl = clone
+  st = status --short
+  sh = show
+  fd = "!git diff --color $@ | diff-so-fancy"
+  ft = fetch
+  fu = fetch upstream
+  br = branch
+  mt = mergetool
+  rb = rebase
+  rbi = rebase -i
+  pl = pull
+  type = cat-file -t
+  dump = cat-file -p
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  branch-name = rev-parse --abbrev-ref HEAD
+  bn = "!git branch-name"
+  ls-diff-files = "!git --no-pager show --pretty=format: --name-only"
+  find-merge = "!sh -c 'commit=$0 && branch=${1:-HEAD} && (git rev-list $commit..$branch --ancestry-path | cat -n; git rev-list $commit..$branch --first-parent | cat -n) | sort -k2 -s | uniq -f1 -d | sort -n | tail -1 | cut -f2'"
+  show-merge = "!sh -c 'merge=$(git find-merge $0 $1) && [ -n \"$merge\" ] && git show $merge'"
+  delete-merged-branch = "!git branch --merged | grep -vE '^\\*|master$|main$|develop$' | xargs -I % git branch -d %"
+
+[ghq]
+  root = ~/repo
+
+[tig "bind"]
+  diff = F ?!git commit --fixup %(commit)
+  diff = S ?!git commit --squash %(commit)
+  main = F ?!git commit --fixup %(commit)
+  main = S ?!git commit --squash %(commit)
