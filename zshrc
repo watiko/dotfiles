@@ -115,6 +115,11 @@ function hub-pr-checkout() {
     src="$SDKMAN_DIR/bin/sdkman-init.sh" \
     zdharma-continuum/null
 
+  export OPAM_INIT="$HOME/.opam/opam-init/init.zsh"
+  zinit as="command" wait="0a" lucid light-mode for \
+    id-as="opam" if="[[ -f $OPAM_INIT ]]" pick="$OPAM_INIT" \
+    zdharma-continuum/null
+
   ## completion
   zinit as="completion" wait="0a" lucid is-snippet for \
     OMZP::cargo \
@@ -192,7 +197,6 @@ function hub-pr-checkout() {
 
   sources=(
     ~/.cargo/env
-    ~/.opam/opam-init/init.zsh
     "$GCLOUD_HOME/path.zsh.inc"
   )
   for s in $sources; do
