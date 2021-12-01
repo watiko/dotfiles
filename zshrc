@@ -8,8 +8,9 @@
   fi
 
   if [[ ! -z "$SHOW_PROF_TIME" ]]; then
+    zmodload zsh/datetime
     function get_time_ms() {
-      get-unixtime-ms
+      strftime '%s%.'
     }
     function show_time() {
       local start=$1
@@ -85,13 +86,6 @@ function hub-pr-checkout() {
     atpull="%atclone" \
     src="zhook.zsh" nocompile="!" \
     direnv/direnv
-
-  zinit as="command" wait="0b" lucid light-mode for \
-    id-as="get-unixtime-ms" has="rustc" \
-    atclone="cat ~/.commands/get-unixtime-ms/main.rs | rustc -O -o get-unixtime-ms -" \
-    atpull="%atclone" \
-    sbin="get-unixtime-ms" \
-    zdharma-continuum/null
 
   zinit as="command" wait="0a" lucid light-mode for \
     pick="asdf.sh" src="completions/_asdf" @asdf-vm/asdf
