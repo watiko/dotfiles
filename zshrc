@@ -85,7 +85,7 @@ function hub-pr-checkout() {
   zinit as="null" wait lucid from="gh-r" for \
     mv="bat* -> bat" sbin="bat/bat" @sharkdp/bat \
     mv="fd* -> fd" sbin="fd/fd" @sharkdp/fd \
-    mv="ghq*/ghq -> ghq" sbin="ghq" x-motemen/ghq \
+    mv="*/ghq -> ghq" sbin="ghq" x-motemen/ghq \
     atinit="alias ls=exa" sbin="bin/exa" ogham/exa \
     sbin="fzf" junegunn/fzf
 
@@ -95,6 +95,13 @@ function hub-pr-checkout() {
     atpull="%atclone" \
     src="zhook.zsh" nocompile="!" \
     direnv/direnv
+
+  zinit as="null" wait="0a" lucid from="gh-r" for \
+    id-as="gh" mv="*/bin/gh -> gh" sbin="gh" \
+    atclone="./gh completion -s zsh > zhook.zsh" \
+    atpull="%atclone" \
+    src="zhook.zsh" nocompile="!" \
+    cli/cli
 
   zinit as="command" wait="0a" lucid light-mode for \
     pick="asdf.sh" src="completions/_asdf" @asdf-vm/asdf
