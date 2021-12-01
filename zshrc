@@ -76,17 +76,19 @@ function hub-pr-checkout() {
     sindresorhus/pure
 
   ## application
-  zinit as="null" lucid from="gh-r" for \
+  zinit as="null" wait lucid from="gh-r" for \
     mv="bat* -> bat" sbin="bat/bat" @sharkdp/bat \
-    mv="direnv* -> direnv" sbin="direnv" \
-      atclone="./direnv hook zsh > zhook.zsh" \
-      atpull="%atclone" \
-      src="zhook.zsh" nocompile="!" \
-      direnv/direnv \
     mv="fd* -> fd" sbin="fd/fd" @sharkdp/fd \
     mv="ghq*/ghq -> ghq" sbin="ghq" x-motemen/ghq \
     atinit="alias ls=exa" sbin="bin/exa" ogham/exa \
     sbin="fzf" junegunn/fzf
+
+  zinit as="null" lucid from="gh-r" for \
+    mv="direnv* -> direnv" sbin="direnv" \
+    atclone="./direnv hook zsh > zhook.zsh" \
+    atpull="%atclone" \
+    src="zhook.zsh" nocompile="!" \
+    direnv/direnv
 
   zinit as="command" wait="0b" lucid light-mode for \
     id-as="get-unixtime-ms" has="rustc" \
@@ -98,7 +100,7 @@ function hub-pr-checkout() {
   zinit as="command" wait="0a" lucid light-mode for \
     pick="asdf.sh" src="completions/_asdf" @asdf-vm/asdf
 
-  zinit as="command" lucid light-mode for \
+  zinit as="command" wait lucid light-mode for \
     pick="bin/tfenv" tfutils/tfenv
   
   zinit as="command" wait="0a" lucid light-mode for \
@@ -119,7 +121,7 @@ function hub-pr-checkout() {
     zdharma-continuum/null
 
   ## completion
-  zinit as="completion" lucid is-snippet for \
+  zinit as="completion" wait="0a" lucid is-snippet for \
     OMZP::cargo \
     OMZP::docker-compose/_docker-compose \
     OMZP::docker/_docker \
