@@ -21,11 +21,6 @@
   fi
 }
 
-## fix path for macOS
-if [ -x /usr/libexec/path_helper ]; then
-  eval $(/usr/libexec/path_helper -s)
-fi
-
 ## functions
 function hub-pr-checkout() {
   local prs=$(gh pr list 2>/dev/null)
