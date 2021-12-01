@@ -45,13 +45,8 @@ function hub-pr-checkout() {
   autoload -Uz _zinit
   (( ${+_comps} )) && _comps[zinit]=_zinit
 
-  # Load a few important annexes, without Turbo
-  # (this is currently required for annexes)
   zinit light-mode for \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-readurl \
-    zdharma-continuum/zinit-annex-rust
+    zdharma-continuum/zinit-annex-bin-gem-node
 }
 
 ## plugin
