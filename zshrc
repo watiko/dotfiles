@@ -67,10 +67,19 @@ function hub-pr-checkout() {
     PZTM::completion
 
   ## prompt
-  zinit light-mode for \
-    pick="async.zsh" src="pure.zsh" \
-    compile="(pure|async).zsh" \
-    sindresorhus/pure
+  if (( $+commands[starship] )); then
+    zinit light-mode for \
+      id-as="starship" \
+      atclone="starship init zsh > zhook.zsh" \
+      atpull="%atclone" \
+      src="zhook.zsh" nocompile="!" \
+      zdharma-continuum/null
+  else
+    zinit light-mode for \
+      pick="async.zsh" src="pure.zsh" \
+      compile="(pure|async).zsh" \
+      sindresorhus/pure
+  fi
 
   ## application
   zinit as="null" wait lucid from="gh-r" for \
