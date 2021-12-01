@@ -57,6 +57,7 @@ function hub-pr-checkout() {
     PZTM::helper \
     PZTM::spectrum \
     PZTM::directory \
+    PZTM::history \
     PZTM::terminal \
     atload="zstyle ':prezto:module:editor' key-bindings emacs" \
       PZTM::editor
