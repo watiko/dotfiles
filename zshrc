@@ -85,7 +85,7 @@ function hub-pr-checkout() {
       direnv/direnv \
     mv="fd* -> fd" sbin="fd/fd" @sharkdp/fd \
     mv="ghq*/ghq -> ghq" sbin="ghq" x-motemen/ghq \
-    sbin="bin/exa" ogham/exa \
+    atinit="alias ls=exa" sbin="bin/exa" ogham/exa \
     sbin="fzf" junegunn/fzf
 
   zinit as="command" wait="0b" lucid light-mode for \
