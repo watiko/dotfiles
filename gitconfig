@@ -7,7 +7,7 @@
   filemode = false
   quotepath = false
   editor = vim -c \"set fenc=utf-8\"
-  excludesfile = /Users/watiko/.gitignore_global
+  excludesfile = ~/.gitignore_global
 
 [pull]
   ff = only
