@@ -57,7 +57,7 @@ function hub-pr-checkout() {
     PZTM::terminal \
     atload="zstyle ':prezto:module:editor' key-bindings emacs" \
       PZTM::editor
-  zinit wait lucid is-snippet for \
+  zinit wait="0a" lucid is-snippet for \
     PZTM::utility \
     PZTM::completion
 
@@ -137,7 +137,7 @@ function hub-pr-checkout() {
     https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
 
   function after_completion_setup() {
-    autoload bashcompinit && bashcompinit
+    autoload -Uz +X bashcompinit && bashcompinit
 
     [[ -f /usr/local/bin/aws_completer ]] && complete -C /usr/local/bin/aws_completer aws
     sources=(
@@ -188,26 +188,6 @@ function hub-pr-checkout() {
   }
   zle -N select-repo
   bindkey '^g' select-repo
-}
-
-## setup tools
-{
-  export FLUTTER_HOME="$HOME/soft/flutter"
-  export GCLOUD_HOME="$HOME/soft/google-cloud-sdk"
-
-  export PATH="$HOME/bin:$PATH"
-  export PATH="$HOME/.gobrew/current/bin:$HOME/.gobrew/bin:$PATH"
-  export PATH="$FLUTTER_HOME/bin:$PATH"
-  export PATH="$HOME/.deno/bin:$PATH"
-  export PATH="$HOME/.poetry/bin:$PATH"
-
-  sources=(
-    ~/.cargo/env
-    "$GCLOUD_HOME/path.zsh.inc"
-  )
-  for s in $sources; do
-    [[ -f "$s" ]] && source "$s"
-  done
 }
 
 ## profiling
