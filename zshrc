@@ -196,18 +196,13 @@ function hub-pr-checkout() {
   export GCLOUD_HOME="$HOME/soft/google-cloud-sdk"
 
   export PATH="$HOME/bin:$PATH"
-  export PATH="$HOME/.gobrew/current/bin:$HOME/.gobrew/bin:$PATH"
+
   export PATH="$FLUTTER_HOME/bin:$PATH"
+  export PATH="$GCLOUD_HOME/bin:$PATH"
+  export PATH="$HOME/.gobrew/current/bin:$HOME/.gobrew/bin:$PATH"
   export PATH="$HOME/.deno/bin:$PATH"
   export PATH="$HOME/.poetry/bin:$PATH"
-
-  sources=(
-    ~/.cargo/env
-    "$GCLOUD_HOME/path.zsh.inc"
-  )
-  for s in $sources; do
-    [[ -f "$s" ]] && source "$s"
-  done
+  export PATH="$HOME/.cargo/bin:$PATH"
 }
 
 ## profiling
