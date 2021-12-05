@@ -57,7 +57,7 @@ function hub-pr-checkout() {
     PZTM::terminal \
     atload="zstyle ':prezto:module:editor' key-bindings emacs" \
       PZTM::editor
-  zinit wait lucid is-snippet for \
+  zinit wait="0a" lucid is-snippet for \
     PZTM::utility \
     PZTM::completion
 
