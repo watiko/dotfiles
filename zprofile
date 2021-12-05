@@ -17,3 +17,18 @@ fi
 
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path
+
+## setup tools
+{
+  export FLUTTER_HOME="$HOME/soft/flutter"
+  export GCLOUD_HOME="$HOME/soft/google-cloud-sdk"
+
+  export PATH="$HOME/bin:$PATH"
+
+  export PATH="$FLUTTER_HOME/bin:$PATH"
+  export PATH="$GCLOUD_HOME/bin:$PATH"
+  export PATH="$HOME/.gobrew/current/bin:$HOME/.gobrew/bin:$PATH"
+  export PATH="$HOME/.deno/bin:$PATH"
+  export PATH="$HOME/.poetry/bin:$PATH"
+  export PATH="$HOME/.cargo/bin:$PATH"
+}
