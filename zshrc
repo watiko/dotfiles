@@ -137,7 +137,7 @@ function hub-pr-checkout() {
     https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
 
   function after_completion_setup() {
-    autoload bashcompinit && bashcompinit
+    autoload -Uz +X bashcompinit && bashcompinit
 
     [[ -f /usr/local/bin/aws_completer ]] && complete -C /usr/local/bin/aws_completer aws
     sources=(
