@@ -98,7 +98,7 @@ function hub-pr-checkout() {
     src="zhook.zsh" nocompile="!" \
     cli/cli
 
-  zinit as="command" wait="0a" lucid light-mode for \
+  zinit wait="0a" lucid light-mode for \
     pick="asdf.sh" src="completions/_asdf" @asdf-vm/asdf
 
   zinit as="command" wait lucid light-mode for \
