@@ -27,6 +27,7 @@ typeset -gU cdpath fpath mailpath path
 
   export PATH="$FLUTTER_HOME/bin:$PATH"
   export PATH="$GCLOUD_HOME/bin:$PATH"
+  export PATH="$HOME/go/bin:$PATH"
   export PATH="$HOME/.gobrew/current/bin:$HOME/.gobrew/bin:$PATH"
   export PATH="$HOME/.deno/bin:$PATH"
   export PATH="$HOME/.poetry/bin:$PATH"
