@@ -35,6 +35,11 @@ function hub-pr-checkout() {
   gh pr checkout "$number"
 }
 
+function zinit-installed() {
+  local cmd="$1"
+  which "$cmd" | grep "$ZPFX" >/dev/null
+}
+
 ## zinit
 {
   [[ -f ~/.local/share/zinit/zinit.git/zinit.zsh ]] && source ~/.local/share/zinit/zinit.git/zinit.zsh
@@ -77,12 +82,21 @@ function hub-pr-checkout() {
   fi
 
   ## application
-  zinit as="null" wait lucid from="gh-r" for \
+  zinit as="command" wait lucid from="gh-r" for \
     mv="bat* -> bat" sbin="bat/bat" @sharkdp/bat \
     mv="fd* -> fd" sbin="fd/fd" @sharkdp/fd \
+    if='[[ "$(uname -m)" != "aarch64" ]]' \
     mv="*/ghq -> ghq" sbin="ghq" x-motemen/ghq \
-    atinit="alias ls=exa" sbin="bin/exa" ogham/exa \
     sbin="fzf" junegunn/fzf
+
+  if ! zinit-installed exa && (( $+commands[exa] )); then
+    alias ls=exa
+  else
+    # https://github.com/ogham/exa/issues/414
+    zinit as="command" wait lucid from="gh-r" for \
+      if='[[ "$(uname -m)" != "aarch64" ]]' \
+      id-as="exa" atinit="alias ls=exa" sbin="bin/exa" ogham/exa
+  fi
 
   zinit as="null" lucid from="gh-r" for \
     mv="direnv* -> direnv" sbin="direnv" \
@@ -91,15 +105,14 @@ function hub-pr-checkout() {
     src="zhook.zsh" nocompile="!" \
     direnv/direnv
 
-  zinit as="null" wait="0a" lucid from="gh-r" for \
+  zinit as="command" wait="0a" lucid from="gh-r" for \
     id-as="gh" mv="*/bin/gh -> gh" sbin="gh" \
-    atclone="./gh completion -s zsh > zhook.zsh" \
+    atclone="./gh completion -s zsh > _gh" \
     atpull="%atclone" \
-    src="zhook.zsh" nocompile="!" \
     cli/cli
 
   zinit wait="0a" lucid light-mode for \
-    pick="asdf.sh" src="completions/_asdf" @asdf-vm/asdf
+    pick="asdf.sh" @asdf-vm/asdf
 
   zinit as="command" wait lucid light-mode for \
     pick="bin/tfenv" tfutils/tfenv
@@ -131,10 +144,7 @@ function hub-pr-checkout() {
     OMZP::cargo \
     OMZP::docker-compose/_docker-compose \
     OMZP::docker/_docker \
-    OMZP::rust/_rust \
-    OMZP::rustup \
-    https://github.com/junegunn/fzf/blob/master/shell/completion.zsh \
-    https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
+    OMZP::rust/_rustc
 
   function after_completion_setup() {
     autoload -Uz +X bashcompinit && bashcompinit
@@ -165,8 +175,15 @@ function hub-pr-checkout() {
 
   ## alias
   alias nv=nvim
-  alias g=git
   alias t=tig
+
+  function g() {
+    if [[ "$1" = "root" ]]; then
+      cd "$(git rev-parse --show-superproject-working-tree --show-toplevel | head -n1)"
+    else
+      git "$@"
+    fi
+  }
 
   ### bindings
   function select-history() {
