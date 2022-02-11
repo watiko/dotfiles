@@ -131,8 +131,7 @@ function hub-pr-checkout() {
     OMZP::cargo \
     OMZP::docker-compose/_docker-compose \
     OMZP::docker/_docker \
-    OMZP::rust/_rust \
-    OMZP::rustup \
+    OMZP::rust/_rustc \
     https://github.com/junegunn/fzf/blob/master/shell/completion.zsh \
     https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
 
