@@ -143,9 +143,7 @@ function zinit-installed() {
     OMZP::cargo \
     OMZP::docker-compose/_docker-compose \
     OMZP::docker/_docker \
-    OMZP::rust/_rustc \
-    https://github.com/junegunn/fzf/blob/master/shell/completion.zsh \
-    https://github.com/junegunn/fzf/blob/master/shell/key-bindings.zsh
+    OMZP::rust/_rustc
 
   function after_completion_setup() {
     autoload -Uz +X bashcompinit && bashcompinit
