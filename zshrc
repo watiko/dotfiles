@@ -82,7 +82,7 @@ function zinit-installed() {
   fi
 
   ## application
-  zinit as="null" wait lucid from="gh-r" for \
+  zinit as="command" wait lucid from="gh-r" for \
     mv="bat* -> bat" sbin="bat/bat" @sharkdp/bat \
     mv="fd* -> fd" sbin="fd/fd" @sharkdp/fd \
     mv="*/ghq -> ghq" sbin="ghq" x-motemen/ghq \
@@ -104,15 +104,14 @@ function zinit-installed() {
     src="zhook.zsh" nocompile="!" \
     direnv/direnv
 
-  zinit as="null" wait="0a" lucid from="gh-r" for \
+  zinit as="command" wait="0a" lucid from="gh-r" for \
     id-as="gh" mv="*/bin/gh -> gh" sbin="gh" \
-    atclone="./gh completion -s zsh > zhook.zsh" \
+    atclone="./gh completion -s zsh > _gh" \
     atpull="%atclone" \
-    src="zhook.zsh" nocompile="!" \
     cli/cli
 
   zinit wait="0a" lucid light-mode for \
-    pick="asdf.sh" src="completions/_asdf" @asdf-vm/asdf
+    pick="asdf.sh" @asdf-vm/asdf
 
   zinit as="command" wait lucid light-mode for \
     pick="bin/tfenv" tfutils/tfenv
