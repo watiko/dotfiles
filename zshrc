@@ -85,6 +85,7 @@ function zinit-installed() {
   zinit as="command" wait lucid from="gh-r" for \
     mv="bat* -> bat" sbin="bat/bat" @sharkdp/bat \
     mv="fd* -> fd" sbin="fd/fd" @sharkdp/fd \
+    if='[[ "$(uname -m)" != "aarch64" ]]' \
     mv="*/ghq -> ghq" sbin="ghq" x-motemen/ghq \
     sbin="fzf" junegunn/fzf
 
