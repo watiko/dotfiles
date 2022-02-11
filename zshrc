@@ -35,6 +35,11 @@ function hub-pr-checkout() {
   gh pr checkout "$number"
 }
 
+function zinit-installed() {
+  local cmd="$1"
+  which "$cmd" | grep "$ZPFX" >/dev/null
+}
+
 ## zinit
 {
   [[ -f ~/.local/share/zinit/zinit.git/zinit.zsh ]] && source ~/.local/share/zinit/zinit.git/zinit.zsh
@@ -81,8 +86,16 @@ function hub-pr-checkout() {
     mv="bat* -> bat" sbin="bat/bat" @sharkdp/bat \
     mv="fd* -> fd" sbin="fd/fd" @sharkdp/fd \
     mv="*/ghq -> ghq" sbin="ghq" x-motemen/ghq \
-    atinit="alias ls=exa" sbin="bin/exa" ogham/exa \
     sbin="fzf" junegunn/fzf
+
+  if ! zinit-installed exa && (( $+commands[exa] )); then
+    alias ls=exa
+  else
+    # https://github.com/ogham/exa/issues/414
+    zinit as="command" wait lucid from="gh-r" for \
+      if='[[ "$(uname -m)" != "aarch64" ]]' \
+      id-as="exa" atinit="alias ls=exa" sbin="bin/exa" ogham/exa
+  fi
 
   zinit as="null" lucid from="gh-r" for \
     mv="direnv* -> direnv" sbin="direnv" \
