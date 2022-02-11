@@ -165,8 +165,15 @@ function hub-pr-checkout() {
 
   ## alias
   alias nv=nvim
-  alias g=git
   alias t=tig
+
+  function g() {
+    if [[ "$1" = "root" ]]; then
+      cd "$(git rev-parse --show-superproject-working-tree --show-toplevel | head -n1)"
+    else
+      git "$@"
+    fi
+  }
 
   ### bindings
   function select-history() {
