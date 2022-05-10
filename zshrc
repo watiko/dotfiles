@@ -149,6 +149,9 @@ function zinit-installed() {
   function after_completion_setup() {
     autoload -Uz +X bashcompinit && bashcompinit
 
+    # alias
+    compdef g=git
+
     [[ -f /usr/local/bin/aws_completer ]] && complete -C /usr/local/bin/aws_completer aws
     sources=(
       $SDKMAN_DIR/contrib/completion/bash/sdk
