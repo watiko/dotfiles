@@ -139,8 +139,14 @@ function zinit-installed() {
     zdharma-continuum/null
 
   ## completion
+  # for OMZP
+  [[ -d "$ZSH_CACHE_DIR/completions" ]] || mkdir -p "$ZSH_CACHE_DIR/completions"
+  zinit add-fpath "$ZSH_CACHE_DIR/completions"
+
+  zinit lucid is-snippet for \
+    OMZP::rust
+
   zinit as="completion" wait="0a" lucid is-snippet for \
-    OMZP::cargo \
     OMZP::docker-compose/_docker-compose \
     OMZP::docker/_docker \
     OMZP::rust/_rustc
