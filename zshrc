@@ -83,9 +83,9 @@ function zinit-installed() {
 
   ## application
   zinit as="command" wait lucid from="gh-r" for \
-    mv="bat* -> bat" sbin="bat/bat" @sharkdp/bat \
-    mv="fd* -> fd" sbin="fd/fd" @sharkdp/fd \
-    mv="*/ghq -> ghq" sbin="ghq" x-motemen/ghq \
+    sbin="**/bat" @sharkdp/bat \
+    sbin="**/fd" @sharkdp/fd \
+    sbin="**/ghq" x-motemen/ghq \
     sbin="fzf" junegunn/fzf
 
   if ! zinit-installed exa && (( $+commands[exa] )); then
@@ -105,7 +105,7 @@ function zinit-installed() {
     direnv/direnv
 
   zinit as="command" wait="0a" lucid from="gh-r" for \
-    id-as="gh" mv="*/bin/gh -> gh" sbin="gh" \
+    id-as="gh" sbin="**/gh" \
     atclone="./gh completion -s zsh > _gh" \
     atpull="%atclone" \
     cli/cli
