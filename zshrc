@@ -111,17 +111,6 @@ function hub-pr-checkout() {
     pick="bin/pyenv" src="zhook.zsh" nocompile="!" \
     pyenv/pyenv
 
-  export SDKMAN_DIR="$ZPFX/sdkman"
-  zinit as="command" wait="0c" lucid light-mode for \
-    id-as"sdkman" run-atpull \
-    atclone="
-      wget 'https://get.sdkman.io/?rcupdate=false' -O scr.sh;
-      bash scr.sh" \
-    atpull="sdk selfupdate" \
-    pick="$SDKMAN_DIR/bin/sdk" \
-    src="$SDKMAN_DIR/bin/sdkman-init.sh" \
-    zdharma-continuum/null
-
   export OPAM_INIT="$HOME/.opam/opam-init/init.zsh"
   zinit as="command" wait="0a" lucid light-mode for \
     id-as="opam" if="[[ -f $OPAM_INIT ]]" pick="$OPAM_INIT" \
