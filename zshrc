@@ -93,6 +93,12 @@ function hub-pr-checkout() {
     src="zhook.zsh" nocompile="!" \
     direnv/direnv
 
+  zinit as="command" wait lucid from="gh-r" for \
+    if='[[ -n "$WSL_DISTRO_NAME" ]]' \
+    pick="wsl2-ssh-agent" \
+    atload='eval `wsl2-ssh-agent`' \
+    mame/wsl2-ssh-agent
+
   zinit as="command" wait="0a" lucid from="gh-r" for \
     id-as="gh" sbin="**/gh" \
     atclone="./gh completion -s zsh > _gh" \
