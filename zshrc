@@ -35,11 +35,6 @@ function hub-pr-checkout() {
   gh pr checkout "$number"
 }
 
-function zinit-installed() {
-  local cmd="$1"
-  which "$cmd" | grep "$ZPFX" >/dev/null
-}
-
 ## zinit
 {
   [[ -f ~/.local/share/zinit/zinit.git/zinit.zsh ]] && source ~/.local/share/zinit/zinit.git/zinit.zsh
@@ -88,14 +83,8 @@ function zinit-installed() {
     sbin="**/ghq" x-motemen/ghq \
     sbin="fzf" junegunn/fzf
 
-  if ! zinit-installed exa && (( $+commands[exa] )); then
-    alias ls=exa
-  else
-    # https://github.com/ogham/exa/issues/414
-    zinit as="command" wait lucid from="gh-r" for \
-      if='[[ "$(uname -m)" != "aarch64" ]]' \
-      id-as="exa" atinit="alias ls=exa" sbin="bin/exa" ogham/exa
-  fi
+  zinit as="command" wait lucid from="gh-r" for \
+    id-as="eza" atinit="alias ls=eza" sbin="eza" eza-community/eza
 
   zinit as="null" lucid from="gh-r" for \
     mv="direnv* -> direnv" sbin="direnv" \
@@ -103,6 +92,12 @@ function zinit-installed() {
     atpull="%atclone" \
     src="zhook.zsh" nocompile="!" \
     direnv/direnv
+
+  zinit as="command" wait lucid from="gh-r" for \
+    if='[[ -n "$WSL_DISTRO_NAME" ]]' \
+    pick="wsl2-ssh-agent" \
+    atload='eval `wsl2-ssh-agent`' \
+    mame/wsl2-ssh-agent
 
   zinit as="command" wait="0a" lucid from="gh-r" for \
     id-as="gh" sbin="**/gh" \
@@ -121,17 +116,6 @@ function zinit-installed() {
     atpull="%atclone" atinit='export PYENV_ROOT="$PWD"' \
     pick="bin/pyenv" src="zhook.zsh" nocompile="!" \
     pyenv/pyenv
-
-  export SDKMAN_DIR="$ZPFX/sdkman"
-  zinit as="command" wait="0c" lucid light-mode for \
-    id-as"sdkman" run-atpull \
-    atclone="
-      wget 'https://get.sdkman.io/?rcupdate=false' -O scr.sh;
-      bash scr.sh" \
-    atpull="sdk selfupdate" \
-    pick="$SDKMAN_DIR/bin/sdk" \
-    src="$SDKMAN_DIR/bin/sdkman-init.sh" \
-    zdharma-continuum/null
 
   export OPAM_INIT="$HOME/.opam/opam-init/init.zsh"
   zinit as="command" wait="0a" lucid light-mode for \
