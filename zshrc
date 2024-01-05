@@ -81,6 +81,7 @@ function hub-pr-checkout() {
     sbin="**/bat" @sharkdp/bat \
     sbin="**/fd" @sharkdp/fd \
     sbin="**/ghq" x-motemen/ghq \
+    mv="jq* -> jq" jqlang/jq \
     sbin="fzf" junegunn/fzf
 
   zinit as="command" wait lucid from="gh-r" for \
