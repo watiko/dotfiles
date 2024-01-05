@@ -53,7 +53,6 @@ function hub-pr-checkout() {
     PZTM::helper \
     PZTM::spectrum \
     PZTM::directory \
-    PZTM::history \
     PZTM::terminal \
     atload="zstyle ':prezto:module:editor' key-bindings emacs" \
       PZTM::editor
@@ -160,11 +159,23 @@ function hub-pr-checkout() {
 ## config
 {
   ### history
+  setopt extended_history
+  export HISTFILE="${HISTFILE:-${ZDOTDIR:-$HOME}/.zsh_history}"
   export HISTSIZE=1000000
   export SAVEHIST=1000000
+
+  setopt bang_hist
+  setopt hist_beep
+  setopt hist_expire_dups_first
+  setopt hist_find_no_dups
+  setopt hist_ignore_all_dups
+  setopt hist_ignore_dups
+  setopt hist_ignore_space
+  setopt hist_ignore_space
+  setopt hist_save_no_dups
+  setopt hist_verify
   setopt inc_append_history
   setopt share_history
-  setopt hist_ignore_space
 
   ## alias
   alias nv=nvim
