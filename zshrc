@@ -53,7 +53,6 @@ function hub-pr-checkout() {
     PZTM::helper \
     PZTM::spectrum \
     PZTM::directory \
-    PZTM::history \
     PZTM::terminal \
     atload="zstyle ':prezto:module:editor' key-bindings emacs" \
       PZTM::editor
@@ -81,6 +80,7 @@ function hub-pr-checkout() {
     sbin="**/bat" @sharkdp/bat \
     sbin="**/fd" @sharkdp/fd \
     sbin="**/ghq" x-motemen/ghq \
+    mv="jq* -> jq" jqlang/jq \
     sbin="fzf" junegunn/fzf
 
   zinit as="command" wait lucid from="gh-r" for \
@@ -96,7 +96,7 @@ function hub-pr-checkout() {
   zinit as="command" wait lucid from="gh-r" for \
     if='[[ -n "$WSL_DISTRO_NAME" ]]' \
     pick="wsl2-ssh-agent" \
-    atload='eval `wsl2-ssh-agent`' \
+    atload='eval "$(wsl2-ssh-agent)"' \
     mame/wsl2-ssh-agent
 
   zinit as="command" wait="0a" lucid from="gh-r" for \
@@ -105,8 +105,12 @@ function hub-pr-checkout() {
     atpull="%atclone" \
     cli/cli
 
-  zinit wait="0a" lucid light-mode for \
-    pick="asdf.sh" @asdf-vm/asdf
+  zinit as="command" wait="0a" lucid from="gh-r" for \
+    id-as="mise" sbin="mise* -> mise" \
+    atclone="./mise* completion zsh > _mise" \
+    atpull="%atclone" \
+    atload='eval "$(mise activate zsh)"' \
+    jdx/mise
 
   zinit as="command" wait lucid light-mode for \
     pick="bin/tfenv" tfutils/tfenv
@@ -159,11 +163,23 @@ function hub-pr-checkout() {
 ## config
 {
   ### history
+  setopt extended_history
+  export HISTFILE="${HISTFILE:-${ZDOTDIR:-$HOME}/.zsh_history}"
   export HISTSIZE=1000000
   export SAVEHIST=1000000
+
+  setopt bang_hist
+  setopt hist_beep
+  setopt hist_expire_dups_first
+  setopt hist_find_no_dups
+  setopt hist_ignore_all_dups
+  setopt hist_ignore_dups
+  setopt hist_ignore_space
+  setopt hist_ignore_space
+  setopt hist_save_no_dups
+  setopt hist_verify
   setopt inc_append_history
   setopt share_history
-  setopt hist_ignore_space
 
   ## alias
   alias nv=nvim
