@@ -96,7 +96,7 @@ function hub-pr-checkout() {
   zinit as="command" wait lucid from="gh-r" for \
     if='[[ -n "$WSL_DISTRO_NAME" ]]' \
     pick="wsl2-ssh-agent" \
-    atload='eval `wsl2-ssh-agent`' \
+    atload='eval "$(wsl2-ssh-agent)"' \
     mame/wsl2-ssh-agent
 
   zinit as="command" wait="0a" lucid from="gh-r" for \
@@ -105,8 +105,12 @@ function hub-pr-checkout() {
     atpull="%atclone" \
     cli/cli
 
-  zinit wait="0a" lucid light-mode for \
-    pick="asdf.sh" @asdf-vm/asdf
+  zinit as="command" wait="0a" lucid from="gh-r" for \
+    id-as="mise" sbin="mise* -> mise" \
+    atclone="./mise* completion zsh > _mise" \
+    atpull="%atclone" \
+    atload='eval "$(mise activate zsh)"' \
+    jdx/mise
 
   zinit as="command" wait lucid light-mode for \
     pick="bin/tfenv" tfutils/tfenv
