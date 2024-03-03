@@ -84,7 +84,11 @@ function hub-pr-checkout() {
     sbin="fzf" junegunn/fzf
 
   zinit as="command" wait lucid from="gh-r" for \
+    if='[[ "$(uname)" != "Darwin" ]]' \
     id-as="eza" atinit="alias ls=eza" sbin="eza" eza-community/eza
+  if (( $+commands[eza] )); then
+    alias ls=eza
+  fi
 
   zinit as="null" lucid from="gh-r" for \
     mv="direnv* -> direnv" sbin="direnv" \
