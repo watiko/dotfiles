@@ -106,7 +106,7 @@ function hub-pr-checkout() {
     cli/cli
 
   zinit as="command" wait="0a" lucid from="gh-r" for \
-    id-as="mise" sbin="mise* -> mise" \
+    id-as="mise" mv="mise* -> mise" sbin \
     atclone="./mise* completion zsh > _mise" \
     atpull="%atclone" \
     atload='eval "$(mise activate zsh)"' \
