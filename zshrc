@@ -119,12 +119,6 @@ function hub-pr-checkout() {
   zinit as="command" wait lucid light-mode for \
     pick="bin/tfenv" tfutils/tfenv
   
-  zinit as="command" wait="0a" lucid light-mode for \
-    atclone='PYENV_ROOT="$PWD" ./libexec/pyenv init - > zhook.zsh' \
-    atpull="%atclone" atinit='export PYENV_ROOT="$PWD"' \
-    pick="bin/pyenv" src="zhook.zsh" nocompile="!" \
-    pyenv/pyenv
-
   export OPAM_INIT="$HOME/.opam/opam-init/init.zsh"
   zinit as="command" wait="0a" lucid light-mode for \
     id-as="opam" if="[[ -f $OPAM_INIT ]]" pick="$OPAM_INIT" \
