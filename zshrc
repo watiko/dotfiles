@@ -105,7 +105,7 @@ function hub-pr-checkout() {
 
   zinit as="command" wait="0a" lucid from="gh-r" for \
     id-as="gh" sbin="**/gh" \
-    atclone="./gh completion -s zsh > _gh" \
+    atclone="**/gh completion -s zsh > _gh" \
     atpull="%atclone" \
     cli/cli
 
