@@ -140,8 +140,7 @@ function hub-pr-checkout() {
 
   zinit as="completion" wait="0a" lucid is-snippet for \
     OMZP::docker-compose/_docker-compose \
-    OMZP::docker/_docker \
-    OMZP::rust/_rustc
+    OMZP::docker/completions/_docker
 
   function after_completion_setup() {
     autoload -Uz +X bashcompinit && bashcompinit
