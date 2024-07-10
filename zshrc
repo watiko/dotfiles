@@ -84,6 +84,11 @@ function hub-pr-checkout() {
     sbin="fzf" junegunn/fzf
 
   zinit as="command" wait lucid from="gh-r" for \
+    sbin="zoxide" \
+    atload='eval "$(zoxide init zsh)"' \
+    ajeetdsouza/zoxide
+
+  zinit as="command" wait lucid from="gh-r" for \
     if='[[ "$(uname)" != "Darwin" ]]' \
     id-as="eza" atinit="alias ls=eza" sbin="eza" eza-community/eza
   if (( $+commands[eza] )); then
