@@ -35,6 +35,12 @@ function hub-pr-checkout() {
   gh pr checkout "$number"
 }
 
+if [[ -n "$WSL_DISTRO_NAME" ]]; then
+  function pbcopy() {
+    iconv -t utf16 | clip.exe
+  }
+fi
+
 ## zinit
 {
   [[ -f ~/.local/share/zinit/zinit.git/zinit.zsh ]] && source ~/.local/share/zinit/zinit.git/zinit.zsh
