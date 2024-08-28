@@ -197,6 +197,12 @@ function hub-pr-checkout() {
     fi
   }
 
+  ## WSL2
+  if [[ -n "$WSL_DISTRO_NAME" ]]; then
+    export GDK_SCALE=2
+    export GDK_DPI_SCALE=0.75
+  fi
+
   ### bindings
   function select-history() {
     BUFFER=$(history -n -r 1 | fzf --no-sort +m --query "$LBUFFER" --prompt="History > ")
