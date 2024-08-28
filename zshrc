@@ -91,6 +91,8 @@ function hub-pr-checkout() {
   zinit as="command" wait lucid from="gh-r" for \
     if='[[ "$(uname)" != "Darwin" ]]' \
     id-as="eza" atinit="alias ls=eza" sbin="eza" eza-community/eza
+  zinit as="completion" wait="0a" lucid from="gh-r" for \
+    id-as="eza-completions" bpick="completions-*" eza-community/eza
   if (( $+commands[eza] )); then
     alias ls=eza
   fi
