@@ -116,7 +116,7 @@ function hub-pr-checkout() {
     atpull="%atclone" \
     cli/cli
 
-  zinit as="command" wait="0a" lucid from="gh-r" for \
+  zinit as="command" lucid from="gh-r" for \
     id-as="mise" mv="mise* -> mise" sbin \
     atclone="./mise* completion zsh > _mise" \
     atpull="%atclone" \
