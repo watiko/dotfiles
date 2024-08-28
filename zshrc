@@ -35,6 +35,12 @@ function hub-pr-checkout() {
   gh pr checkout "$number"
 }
 
+if [[ -n "$WSL_DISTRO_NAME" ]]; then
+  function pbcopy() {
+    iconv -t utf16 | clip.exe
+  }
+fi
+
 ## zinit
 {
   [[ -f ~/.local/share/zinit/zinit.git/zinit.zsh ]] && source ~/.local/share/zinit/zinit.git/zinit.zsh
@@ -84,8 +90,15 @@ function hub-pr-checkout() {
     sbin="fzf" junegunn/fzf
 
   zinit as="command" wait lucid from="gh-r" for \
+    sbin="zoxide" \
+    atload='eval "$(zoxide init zsh)"' \
+    ajeetdsouza/zoxide
+
+  zinit as="command" wait lucid from="gh-r" for \
     if='[[ "$(uname)" != "Darwin" ]]' \
     id-as="eza" atinit="alias ls=eza" sbin="eza" eza-community/eza
+  zinit as="completion" wait="0a" lucid from="gh-r" for \
+    id-as="eza-completions" bpick="completions-*" eza-community/eza
   if (( $+commands[eza] )); then
     alias ls=eza
   fi
@@ -105,11 +118,11 @@ function hub-pr-checkout() {
 
   zinit as="command" wait="0a" lucid from="gh-r" for \
     id-as="gh" sbin="**/gh" \
-    atclone="./gh completion -s zsh > _gh" \
+    atclone="**/gh completion -s zsh > _gh" \
     atpull="%atclone" \
     cli/cli
 
-  zinit as="command" wait="0a" lucid from="gh-r" for \
+  zinit as="command" lucid from="gh-r" for \
     id-as="mise" mv="mise* -> mise" sbin \
     atclone="./mise* completion zsh > _mise" \
     atpull="%atclone" \
@@ -119,12 +132,6 @@ function hub-pr-checkout() {
   zinit as="command" wait lucid light-mode for \
     pick="bin/tfenv" tfutils/tfenv
   
-  zinit as="command" wait="0a" lucid light-mode for \
-    atclone='PYENV_ROOT="$PWD" ./libexec/pyenv init - > zhook.zsh' \
-    atpull="%atclone" atinit='export PYENV_ROOT="$PWD"' \
-    pick="bin/pyenv" src="zhook.zsh" nocompile="!" \
-    pyenv/pyenv
-
   export OPAM_INIT="$HOME/.opam/opam-init/init.zsh"
   zinit as="command" wait="0a" lucid light-mode for \
     id-as="opam" if="[[ -f $OPAM_INIT ]]" pick="$OPAM_INIT" \
@@ -140,8 +147,7 @@ function hub-pr-checkout() {
 
   zinit as="completion" wait="0a" lucid is-snippet for \
     OMZP::docker-compose/_docker-compose \
-    OMZP::docker/_docker \
-    OMZP::rust/_rustc
+    OMZP::docker/completions/_docker
 
   function after_completion_setup() {
     autoload -Uz +X bashcompinit && bashcompinit
@@ -196,6 +202,12 @@ function hub-pr-checkout() {
       git "$@"
     fi
   }
+
+  ## WSL2
+  if [[ -n "$WSL_DISTRO_NAME" ]]; then
+    export GDK_SCALE=2
+    export GDK_DPI_SCALE=0.75
+  fi
 
   ### bindings
   function select-history() {
